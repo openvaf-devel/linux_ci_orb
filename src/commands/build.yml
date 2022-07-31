@@ -1,0 +1,26 @@
+description: >
+  Sets up caching, cargo authentication etc.
+parameters:
+  target:
+    type: string
+    description: cargo target to build
+    default: x86_64-unknown-linux-gnu
+  profile:
+    type: string
+    description: cargo target to build
+    default: dev
+  command:
+    type: string
+    description: build command to use
+    default: nextest list
+steps:
+  - with-rust:
+      steps:
+        - run: |
+            mkdir -p target/<< parameters.target >>/debug
+            cargo << parameters.command >> --target << parameters.target >> target/<< parameters.target >>/debug/tests.json
+            cargo metadata --format-version 1 >> target/<< parameters.target >>/debug/cargo.json
+  - persist_to_workspace:
+      root: .
+      paths:
+        - target/<< parameters.target >>/<< parameters.profile >>

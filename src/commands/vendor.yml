@@ -1,0 +1,30 @@
+description: >
+  Sets up caching, cargo authentication etc.
+parameters:
+  circleci-cache-prefix:
+    type: string
+    description: prefix before the hash to use
+    default: vendor-
+steps:
+  - run:
+      name: Generate normalize lock file
+      command: ci_tools vendor normalize Cargo.lock
+  - restore_cache:
+      keys:
+        - << parameters.circleci-cache-prefix >>{{ checksum "Cargo.lock.norm" }}
+      paths:
+        - vendor
+  - run:
+      name: Vendor Dependencies if they are not cached
+      command: ci_tools vendor generate
+  - save_cache:
+      keys:
+        - << parameters.circleci-cache-prefix >>{{ checksum "Cargo.lock.norm" }}
+      paths:
+        - vendor
+
+  - persist_to_workspace:
+      root: .
+      paths:
+        - vendor
+        - .cargo/config.toml

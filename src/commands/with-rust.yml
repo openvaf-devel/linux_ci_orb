@@ -1,0 +1,30 @@
+description: >
+  Sets up caching, cargo authentication etc.
+parameters:
+  steps:
+    type: steps
+    description: Rust compilation steps to run
+  sccache-bucket:
+    type: string
+    description: Name of S3 bucket to use for sccache
+    default: openva
+  sccache-endpoint:
+    type: string
+    description: S3 ednpoint to use
+    default: https://fra1.digitaloceanspaces.com
+  sccache-prefix:
+    type: string
+    description: prefix before the hash to use
+    default: sccache-
+steps:
+  - run:
+      name: Start sccache and configure rust
+      environment:
+        SCCACHE_BUCKET: << parameters.sccache-bucket >>
+        SCCACHE_ENDPOINT: << parameters.sccache-endpoint >>
+        SCCACHE_S3_KEY_PREFIX: << parameters.sccache-prefix >>
+      command: <<include(scripts/with-rust-pre.sh)>>
+  - steps: << parameters.steps >>
+  - run:
+      name: Stop sccache
+      command: <<include(scripts/with-rust-post.sh)>>

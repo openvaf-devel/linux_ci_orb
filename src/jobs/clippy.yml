@@ -1,0 +1,13 @@
+description: >
+  Lint project with clippy
+
+executor:
+  name: default
+  resource_class: small
+
+steps:
+  - attach_workspace:
+      at: .
+  - with-rust:
+      steps:
+        - run: cargo clippy --all-targets -D warnings

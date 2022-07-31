@@ -1,5 +1,5 @@
 description: >
-  Default Linux Container for standard jobs
+  Default Linux Container for release jobs (includes manylinux)
 docker:
   - image: ghcr.io/pascalkuthe/ferris_ci:latest
 resource_class: << parameters.resource_class >>

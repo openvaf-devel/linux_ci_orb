@@ -1,0 +1,8 @@
+description: >
+  Check formatting with rustfmt
+
+executor:
+  name: default
+  resource_class: small
+steps:
+  - run: cargo fmt --all --check

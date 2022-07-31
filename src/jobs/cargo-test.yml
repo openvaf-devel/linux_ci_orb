@@ -1,0 +1,40 @@
+description: >
+  run cargo tests with cargo-nextest and store results as junit
+
+parameters:
+  parallelism:
+    type: integer
+    default: 2
+    description: Number of Circle machines to use for testing, min 1
+  executer:
+    type: string
+    description: executer to use
+    default: default
+  resource_class:
+    default: large
+    type: string
+  target:
+    type: string
+    description: cargo target to build
+    default: x86_64-unknown-linux-gnu
+
+executor:
+  name: default
+  resource_class: << parameters.resource_class >>
+environment:
+  TARGET: << parameters.target >>
+steps:
+  - attach_workspace:
+      at: .
+  - run:
+      name: cargo-nextest run
+      command: <<include(scripts/run_tests.sh)>>
+  - run:
+      name: circleci-junit-fix
+      command: mkdir test-results && cat target/nextest/junit.xml | circleci-junit-fix > test-results/junit.xml
+      when: always
+  - store_test_results:
+      path: test-results
+      when: always
+
+parallelism: << parameters.parallelism >>
