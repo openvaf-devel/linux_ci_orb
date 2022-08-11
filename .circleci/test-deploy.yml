@@ -19,10 +19,8 @@ jobs:
           steps:
             - run:
                 command: |
-                  cargo --version
-                  cargo new hello
-                  cd hello
-                  cargo run
+                  cargo new --lib hello
+            - ferris-ci/build
 workflows:
   test-deploy:
     jobs:

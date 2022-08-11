@@ -5,10 +5,6 @@ parameters:
     type: string
     description: cargo target to build
     default: x86_64-unknown-linux-gnu
-  profile:
-    type: string
-    description: cargo target to build
-    default: dev
   command:
     type: string
     description: build command to use
@@ -23,4 +19,4 @@ steps:
   - persist_to_workspace:
       root: .
       paths:
-        - target/<< parameters.target >>/<< parameters.profile >>
+        - target/<< parameters.target >>/debug
