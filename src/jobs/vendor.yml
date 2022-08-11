@@ -1,0 +1,15 @@
+description: >
+  Sets up dependency caching
+
+executor:
+  name: default
+  resource_class: small
+parameters:
+  circleci-cache-prefix:
+    type: string
+    description: prefix before the hash to use
+    default: vendor-
+
+steps:
+  - vendor:
+      circleci-cache-prefix: << parameters.circleci-cache-prefix >>

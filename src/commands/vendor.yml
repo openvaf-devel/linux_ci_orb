@@ -1,5 +1,6 @@
 description: >
-  Sets up caching, cargo authentication etc.
+  Sets up dependency caching
+
 parameters:
   circleci-cache-prefix:
     type: string
