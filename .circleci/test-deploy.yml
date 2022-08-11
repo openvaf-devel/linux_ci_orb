@@ -38,7 +38,7 @@ workflows:
           requires:
             - orb-tools/pack
             - command-tests
-          context: 
+          context:
             - orb-publishing
             - github
           filters:
