@@ -11,7 +11,7 @@ parameters:
   sccache-endpoint:
     type: string
     description: S3 ednpoint to use
-    default: https://fra1.digitaloceanspaces.com
+    default: fra1.digitaloceanspaces.com
   sccache-prefix:
     type: string
     description: prefix before the hash to use
