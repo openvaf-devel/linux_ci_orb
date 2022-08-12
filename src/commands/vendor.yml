@@ -9,7 +9,7 @@ parameters:
 steps:
   - run:
       name: Generate normalize lock file
-      command: ci_tools vendor normalize Cargo.lock
+      command: ferris-ci vendor normalize
   - restore_cache:
       keys:
         - << parameters.circleci-cache-prefix >>{{ checksum "Cargo.lock.norm" }}
@@ -17,7 +17,7 @@ steps:
         - vendor
   - run:
       name: Vendor Dependencies if they are not cached
-      command: ci_tools vendor generate
+      command: ferris-ci vendor generate
   - save_cache:
       key: << parameters.circleci-cache-prefix >>{{ checksum "Cargo.lock.norm" }}
       paths:
