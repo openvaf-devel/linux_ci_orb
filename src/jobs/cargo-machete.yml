@@ -6,4 +6,5 @@ executor:
   resource_class: small
 
 steps:
+  - checkout
   - run: cargo machete

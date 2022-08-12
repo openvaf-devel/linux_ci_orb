@@ -19,4 +19,6 @@ path = "junit.xml"
 report-name = "nextest-run"
 END
 
-cargo-nextest run --partition "count:${CI_NODE_INDEX}/${CI_NODE_TOTAL}" --target "${TARGET}" --binaries-metadata "target/${TARGET}/debug/tests.json"  --cargo-metadata "target/{TARGET}/debug/cargo.json"
+cargo-nextest run --partition "count:${CI_NODE_INDEX}/${CI_NODE_TOTAL}" --target "${TARGET}" --archive-file="${ARCHIVE}"
+mkdir test-results 
+circleci-junit-fix > test-results/junit.xml < target/nextest/junit.xml

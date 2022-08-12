@@ -1,0 +1,28 @@
+description: >
+  Build Test binaries
+
+parameters:
+  resource_class:
+    default: large
+    type: string
+  target:
+    type: string
+    description: cargo target to build
+    default: x86_64-unknown-linux-gnu
+  archive-prefix:
+    type: string
+    description: the archive name of the archive file that contains the test binaries
+    default: cargo-tests-
+
+executor:
+  name: default
+  target: << parameters.target >>
+  resource_class: << parameters.resource_class >>
+
+steps:
+  - checkout
+  - attach_workspace:
+      at: .
+  - build:
+      target: << parameters.target >>
+      archive-prefix: << parameters.archive-prefix >>

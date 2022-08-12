@@ -19,11 +19,9 @@ steps:
       name: Vendor Dependencies if they are not cached
       command: ci_tools vendor generate
   - save_cache:
-      keys:
-        - << parameters.circleci-cache-prefix >>{{ checksum "Cargo.lock.norm" }}
+      key: << parameters.circleci-cache-prefix >>{{ checksum "Cargo.lock.norm" }}
       paths:
         - vendor
-
   - persist_to_workspace:
       root: .
       paths:

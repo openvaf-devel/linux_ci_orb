@@ -13,7 +13,7 @@ sccache --start-server
 cat << EOF >> "${BASH_ENV}"
   export RUSTC_WRAPPER="sccache"
   export CARGO_INCREMENTAL="0"
-  export CARGO_INCREMENTAL="0"
+  export CARGO_PROFILE_DEV_PANIC="abort"
   export CARGO_PROFILE_DEV_DEBUG="false"
   export CARGO_PROFILE_RELEASE_LTO="fat"
   export CARGO_PROFILE_RELEASE_LTO="1"

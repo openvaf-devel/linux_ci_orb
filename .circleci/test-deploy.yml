@@ -10,23 +10,44 @@ filters: &filters
 jobs:
   # Create a job to test the commands of your orbs.
   # You may want to add additional validation steps to ensure the commands are working as expected.
-  command-tests:
-    executor: ferris-ci/default
+  all-tests:
+    docker:
+      - image: cimg/base:stable
     steps:
-      - checkout
-      # Run your orb's commands to validate them.
-      - ferris-ci/with-rust:
-          steps:
-            - run:
-                command: |
-                  cargo new --lib hello
-            - ferris-ci/build
+      - run: echo "ALL TESTS PASSED"
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
-      - command-tests:
+      - ferris-ci/vendor:
           filters: *filters
+          context: github
+      - ferris-ci/clippy:
+          requires: [ferris-ci/vendor]
+          filters: *filters
+          context: github
+      - ferris-ci/build-tests:
+          requires: [ferris-ci/vendor]
+          filters: *filters
+          context: github
+          resource_class: small
+      - ferris-ci/run-tests:
+          requires: [ferris-ci/build-tests]
+          filters: *filters
+          context: github
+          resource_class: small
+      - ferris-ci/cargo-machete:
+          filters: *filters
+          context: github
+      - ferris-ci/rustfmt:
+          filters: *filters
+          context: github
+      - all-tests:
+          requires:
+            - ferris-ci/clippy
+            - ferris-ci/run-tests
+            - ferris-ci/cargo-machete
+            - ferris-ci/rustfmt
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
@@ -35,7 +56,7 @@ workflows:
           pub-type: production
           requires:
             - orb-tools/pack
-            - command-tests
+            - all-tests
           context:
             - orb-publishing
             - github

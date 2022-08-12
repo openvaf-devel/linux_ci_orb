@@ -11,5 +11,6 @@ parameters:
     default: vendor-
 
 steps:
+  - checkout
   - vendor:
       circleci-cache-prefix: << parameters.circleci-cache-prefix >>

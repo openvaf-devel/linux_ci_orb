@@ -6,8 +6,7 @@ executor:
   resource_class: small
 
 steps:
+  - checkout
   - attach_workspace:
       at: .
-  - with-rust:
-      steps:
-        - run: cargo clippy --all-targets -D warnings
+  - run: cargo clippy --all-targets -D warnings

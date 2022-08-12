@@ -6,10 +6,6 @@ parameters:
     type: integer
     default: 2
     description: Number of Circle machines to use for testing, min 1
-  executer:
-    type: string
-    description: executer to use
-    default: default
   resource_class:
     default: large
     type: string
@@ -17,24 +13,21 @@ parameters:
     type: string
     description: cargo target to build
     default: x86_64-unknown-linux-gnu
+  archive-prefix:
+    type: string
+    description: the archive name of the archive file that contains the test binaries
+    default: cargo-tests-
 
 executor:
   name: default
+  target: << parameters.target >>
   resource_class: << parameters.resource_class >>
-environment:
-  TARGET: << parameters.target >>
+
 steps:
+  - checkout
   - attach_workspace:
       at: .
-  - run:
-      name: cargo-nextest run
-      command: <<include(scripts/run_tests.sh)>>
-  - run:
-      name: circleci-junit-fix
-      command: mkdir test-results && cat target/nextest/junit.xml | circleci-junit-fix > test-results/junit.xml
-      when: always
-  - store_test_results:
-      path: test-results
-      when: always
-
+  - test:
+      target: << parameters.target >>
+      archive-prefix: << parameters.archive-prefix >>
 parallelism: << parameters.parallelism >>

@@ -5,18 +5,16 @@ parameters:
     type: string
     description: cargo target to build
     default: x86_64-unknown-linux-gnu
-  command:
+  archive-prefix:
     type: string
-    description: build command to use
-    default: nextest list
+    description: the archive name of the archive file that contains the test binaries
+    default: cargo-tests-
+
 steps:
   - with-rust:
       steps:
-        - run: |
-            mkdir -p target/<< parameters.target >>/debug
-            cargo << parameters.command >> --target << parameters.target >> target/<< parameters.target >>/debug/tests.json
-            cargo metadata --format-version 1 >> target/<< parameters.target >>/debug/cargo.json
+        - run: cargo nextest archive --target << parameters.target >> --archive-file=<< parameters.archive-prefix >><< parameters.target >>.tar.zst
   - persist_to_workspace:
       root: .
       paths:
-        - target/<< parameters.target >>/debug
+        - << parameters.archive-prefix >><< parameters.target >>.tar.zst

@@ -5,4 +5,5 @@ executor:
   name: default
   resource_class: small
 steps:
+  - checkout
   - run: cargo fmt --all --check

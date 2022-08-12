@@ -1,0 +1,22 @@
+description: >
+  Run cargo-nextests from pepared archive
+parameters:
+  target:
+    type: string
+    description: cargo target to build
+    default: x86_64-unknown-linux-gnu
+  archive-prefix:
+    type: string
+    description: the archive name of the archive file that contains the test binaries
+    default: cargo-tests-
+
+steps:
+  - run:
+      name: cargo-nextest run
+      command: <<include(scripts/run_tests.sh)>>
+      environment:
+        ARCHIVE: << parameters.archive-prefix >><< parameters.target >>.tar.zst
+        TARGET: << parameters.target >>
+  - store_test_results:
+      path: test-results
+      when: always
