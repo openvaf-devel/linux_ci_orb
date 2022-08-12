@@ -30,7 +30,7 @@ workflows:
           requires: [ferris-ci/vendor]
           filters: *filters
           context: github
-          resource_class: small
+          resource_class: medium
       - ferris-ci/run-tests:
           requires: [ferris-ci/build-tests]
           filters: *filters
