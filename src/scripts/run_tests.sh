@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eux
 
+mkdir -p .config
 tee .config/nextest.toml << END
 [store]
 dir = "target/nextest"
