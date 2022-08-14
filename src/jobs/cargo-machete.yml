@@ -1,10 +1,7 @@
 description: >
   Check for unused deps with cargo-machete
 
-executor:
-  name: default
-  resource_class: small
-
+executor: tools
 steps:
   - checkout
-  - run: cargo machete
+  - run: cargo-machete

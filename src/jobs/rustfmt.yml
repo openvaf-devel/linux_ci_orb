@@ -1,9 +1,7 @@
 description: >
   Check formatting with rustfmt
 
-executor:
-  name: default
-  resource_class: small
+executor: tools
 steps:
   - checkout
-  - run: cargo fmt --all --check
+  - run: rustfmt-all

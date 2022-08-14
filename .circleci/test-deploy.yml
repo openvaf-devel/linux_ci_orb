@@ -29,7 +29,7 @@ workflows:
       - ferris-ci/build-tests:
           requires: [ferris-ci/vendor]
           filters: *filters
-          context: 
+          context:
             - github
             - s3-api
           resource_class: small
@@ -40,10 +40,8 @@ workflows:
           resource_class: small
       - ferris-ci/cargo-machete:
           filters: *filters
-          context: github
       - ferris-ci/rustfmt:
           filters: *filters
-          context: github
       - all-tests:
           requires:
             - ferris-ci/clippy

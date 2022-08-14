@@ -1,0 +1,5 @@
+description: >
+  Default Linux Container for standard jobs
+docker:
+  - image: ghcr.io/pascalkuthe/ferris_ci_tools:latest
+resource_class: small
