@@ -20,6 +20,6 @@ path = "junit.xml"
 report-name = "nextest-run"
 END
 
-cargo nextest run --partition "count:$((CIRCLE_NODE_INDEX + 1))/${CIRCLE_NODE_TOTAL}" --target "${TARGET}" --archive-file="${ARCHIVE}"
+cargo nextest run --partition "count:$((CIRCLE_NODE_INDEX + 1))/${CIRCLE_NODE_TOTAL}" --archive-file="${ARCHIVE}"
 mkdir test-results 
 circleci-junit-fix > test-results/junit.xml < target/nextest/junit.xml
