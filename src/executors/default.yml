@@ -1,16 +1,12 @@
 description: >
-  Default Linux Container for standard jobs
+  Target independent docker images
 docker:
-  - image: ghcr.io/pascalkuthe/ferris_ci_<< parameters.target >>:latest
-    auth:
-      username: $GITHUB_USERNAME
-      password: $GITHUB_TOKEN
+  - image: ghcr.io/pascalkuthe/ferris_ci_<< parameters.image >>:latest
 resource_class: << parameters.resource_class >>
 
 parameters:
   resource_class:
-    default: large
+    default: small
     type: string
-  target:
-    default: x86_64-unknown-linux-gnu
+  image:
     type: string

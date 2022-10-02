@@ -19,7 +19,8 @@ parameters:
     default: cargo-tests-
 
 executor:
-  name: default
+  name: cross
+  image: test_runner
   target: << parameters.target >>
   resource_class: << parameters.resource_class >>
 

@@ -3,7 +3,10 @@ description: >
 
 executor:
   name: default
-  resource_class: small
+  image: clippy
+
+environment:
+  RUST_CHECK: 1
 
 steps:
   - checkout

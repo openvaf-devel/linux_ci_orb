@@ -1,7 +1,10 @@
 description: >
   Check for unused deps with cargo-machete
 
-executor: tools
+executor:
+  name: default
+  image: dep
+
 steps:
   - checkout
   - run: cargo-machete

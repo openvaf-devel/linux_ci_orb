@@ -1,3 +1,5 @@
 fn main() {
-    cc::Build::new().file("foo.c").compile("foo");
+    if std::env::var_os("RUST_CHECK").is_none() {
+        cc::Build::new().file("foo.c").compile("foo");
+    }
 }

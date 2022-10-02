@@ -1,7 +1,10 @@
 description: >
   Check formatting with rustfmt
 
-executor: tools
+executor:
+  name: default
+  image: fmt
+
 steps:
   - checkout
   - run: rustfmt-all

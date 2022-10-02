@@ -25,7 +25,6 @@ workflows:
       - ferris-ci/clippy:
           requires: [ferris-ci/vendor]
           filters: *filters
-          context: github
       - ferris-ci/build-tests:
           requires: [ferris-ci/vendor]
           filters: *filters

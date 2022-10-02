@@ -3,7 +3,8 @@ description: >
 
 executor:
   name: default
-  resource_class: small
+  image: vendor
+
 parameters:
   circleci-cache-prefix:
     type: string
