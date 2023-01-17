@@ -1,0 +1,23 @@
+description: >
+  Upload a release build to s3
+parameters:
+  target:
+    type: string
+    description: cargo target to build
+    default: x86_64-unknown-linux-gnu
+  bin:
+    type: string
+    description: name of the binary in target/release to upload
+    default: openvaf
+  archive-prefix:
+    type: string
+    description: the archive name of the archive file that contains the test binaries
+    default: release
+
+steps:
+  - run:
+      name: upload
+      command: ferris-ci upload -z tar-gz -o "${ARCHIVE}" --env-access-key ./target/<< parameters.target >>/release/<< parameters.bin >>
+
+      environment:
+        ARCHIVE: << parameters.archive-prefix >>-<< parameters.target >>.tar.gz
