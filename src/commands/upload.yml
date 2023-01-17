@@ -17,7 +17,12 @@ parameters:
 steps:
   - run:
       name: upload
-      command: ferris-ci upload -z tar-gz -o "${ARCHIVE}" --env-access-key ./target/<< parameters.target >>/release/<< parameters.bin >>
+      command: |
+                BIN=<< parameters.bin >>
+                if [[ << parameters.target >> == *windows* ]]; then
+                  BIN="${BIN}.exe"
+                fi
+                ferris-ci upload -z tar-gz -o "${ARCHIVE}" --env-access-key ./target/<< parameters.target >>/release/$BIN
 
       environment:
         ARCHIVE: << parameters.archive-prefix >>-<< parameters.target >>.tar.gz
